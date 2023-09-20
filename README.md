@@ -7,13 +7,13 @@ This is a app that can parse your server's log file and show you the ip address 
 ## Getting Started
 
 First, set environment variables in `.env.local`:
-# your mongodb uri
+your mongodb uri
 ```MONGODB_URI=```
 
-# where log file is stored
+where log file is stored
 ```LOG_PATH=/var/log/secure```
 
-# geo ip data file, you can download from https://www.ipip.net/product/client.html
+geo ip data file, you can download from https://cz88.net/help?id=free
 ```QQWRY_DATA_PATH=.../qqwry.dat```
 
 ```bash
