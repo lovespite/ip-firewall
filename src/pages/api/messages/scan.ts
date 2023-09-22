@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
                 existing.data = data.concat(existing.data);
                 existing.last_updated = last_updated;
-                existing.count += 1;
+                existing.count += data.length;
 
                 await existing.save();
                 ++updated;

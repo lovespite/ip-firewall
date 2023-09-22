@@ -7,8 +7,8 @@ import {ScanResult} from "@/pages/api/messages/scan";
 import styles from "@/styles/Home.module.css"
 import {CopyTwoTone} from "@ant-design/icons";
 import {FilterValue, SorterResult, TableCurrentDataSource} from "antd/es/table/interface";
-import {parse_line_exact} from "@/service/utils";
 import {MessageResult} from "@/types/MessagePrototype";
+import {describe_date, toDateTimeString} from "@/service/utils";
 
 interface TableParams {
     pagination: TablePaginationConfig,
@@ -188,7 +188,7 @@ export default function Home() {
                         <Table.Column title="Total Count" dataIndex="count" key={"count"} align={"right"}/>
                         <Table.Column title="Country" dataIndex="country" key={"country"}/>
                         <Table.Column title="IP Ownership" dataIndex="area" key={"area"}/>
-                        <Table.Column title="Time" dataIndex="last_updated" key={"datetime"} render={toDateTimeString}/>
+                        <Table.Column title="Time" dataIndex="last_updated" key={"datetime"} render={describe_date}/>
 
                     </Table>
                 </Space>
@@ -219,23 +219,8 @@ function IpSpan({ip}: { ip: string }) {
 }
 
 function DataSpan({data}: { data: string[] }) {
-    const dataSet = data.map(parse_line_exact).filter(Boolean);
     return data && data.length > 0
-        ? <Table size={"small"} dataSource={dataSet} bordered={true}>
-            <Table.Column title={"DateTime"} key={"datetime"} dataIndex={"date_str"} />
-            <Table.Column title={"Machine"} key={"mac"} dataIndex={"machine"}/>
-            <Table.Column title={"Src Name"} key={"src_name"} dataIndex={"name"}/>
-            <Table.Column title={"Source"} key={"src"} dataIndex={"src"}/>
-            <Table.Column title={"UID"} key={"uid"} dataIndex={"uid"}/>
-            <Table.Column title={"E-UID"} key={"e_uid"} dataIndex={"e_uid"}/>
-            <Table.Column title={"TTY"} key={"tty"} dataIndex={"tty"}/>
-            <Table.Column title={"R-USER"} key={"r_user"} dataIndex={"r_user"}/>
-
-        </Table>
+        ? <div>{data.map((x, i) => <p key={i}>{x}</p>)}</div>
         : <Empty/>
 }
 
-const toDateTimeString = (d: any) => {
-    const date = new Date(d);
-    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`;
-}

@@ -21,7 +21,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
         const messages = await Message
             .find()
-            .sort({count: -1})
+            .sort({count: -1, last_updated: -1})
             .skip(Number(skip))
             .limit(Number(limit))
             .lean<Messages[]>();
@@ -49,7 +49,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     } catch (e) {
 
-        console.error(e);
+        console.error("Message svc error: " + e);
         res.status(500).json({
             success: false,
             message: 'Server error',
